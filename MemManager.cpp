@@ -5,7 +5,7 @@ CAllocater::CAllocater(char *strName)
    //copy the name
    strcpy(strAllocName,strName);
    nAllocSize=0;
-                           
+	lpMemList=NULL;                
 }
 
 CAllocater::~CAllocater()
@@ -152,8 +152,10 @@ void CAllocater::FreeAllocater()
                
      } 
     // PrintMessage("CAllocater::%s unfreed %i bytes",strAllocName,nAllocSize);
-     //clear ouer memlist         
-     free(lpMemList);
+     //clear ouer memlist  
+	 if(lpMemList!=NULL){
+		free(lpMemList);
+	 }
      
 }
 
