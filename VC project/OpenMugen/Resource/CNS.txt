@@ -1,0 +1,11 @@
+[Statedef 170]
+type = a
+ctrl = 0
+anim = 170
+velset = 0,0
+
+[State 170, 1]
+type = ChangeState
+trigger1 = 8*(5+3)/anim
+Value	= 20
+

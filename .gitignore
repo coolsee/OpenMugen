@@ -11,3 +11,9 @@
 *.lai
 *.la
 *.a
+
+Debug
+*.ncb
+*.opensdf
+*.sdf
+*.suo

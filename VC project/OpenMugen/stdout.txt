@@ -1,0 +1,623 @@
+Welcome to OpenMugen Version Alpha 2
+CGame:Init SDL system
+Init Memory Manager
+CSDLManager:: Init()
+CSDLManager:: SDL_Init OK
+CVideoSystem::InitSystem()
+CSDLManager::VideoSystem Init OK
+AddStateDef 170
+ParseState
+AddStateDef 180
+ParseState
+AddStateDef 181
+ParseState
+AddStateDef 191
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 195
+ParseState
+ParseState
+AddStateDef 200
+ParseState
+ParseState
+ParseState
+AddStateDef 210
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 230
+ParseState
+ParseState
+ParseState
+AddStateDef 240
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 400
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 410
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 430
+ParseState
+ParseState
+ParseState
+AddStateDef 440
+ParseState
+ParseState
+ParseState
+AddStateDef 600
+ParseState
+ParseState
+ParseState
+AddStateDef 610
+ParseState
+ParseState
+AddStateDef 630
+ParseState
+ParseState
+AddStateDef 640
+ParseState
+ParseState
+AddStateDef 800
+ParseState
+ParseState
+AddStateDef 810
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 820
+ParseState
+ParseState
+AddStateDef 821
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1000
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1010
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1020
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1025
+ParseState
+ParseState
+AddStateDef 1026
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1027
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1028
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1050
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1051
+ParseState
+ParseState
+ParseState
+AddStateDef 1052
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1055
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1056
+ParseState
+ParseState
+ParseState
+AddStateDef 1060
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1061
+ParseState
+ParseState
+ParseState
+AddStateDef 1070
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1071
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1075
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1100
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1110
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1120
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1200
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1210
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1220
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 3000
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 3050
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 3051
+ParseState
+ParseState
+AddStateDef -3
+ParseState
+CSffManager::Loading kfm/kfm.sff
+CSffManager::Sff file include 264 images
+CSffManager:: 264 image are decoded
+AddStateDef 170
+ParseState
+AddStateDef 180
+ParseState
+AddStateDef 181
+ParseState
+AddStateDef 191
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 195
+ParseState
+ParseState
+AddStateDef 200
+ParseState
+ParseState
+ParseState
+AddStateDef 210
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 230
+ParseState
+ParseState
+ParseState
+AddStateDef 240
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 400
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 410
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 430
+ParseState
+ParseState
+ParseState
+AddStateDef 440
+ParseState
+ParseState
+ParseState
+AddStateDef 600
+ParseState
+ParseState
+ParseState
+AddStateDef 610
+ParseState
+ParseState
+AddStateDef 630
+ParseState
+ParseState
+AddStateDef 640
+ParseState
+ParseState
+AddStateDef 800
+ParseState
+ParseState
+AddStateDef 810
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 820
+ParseState
+ParseState
+AddStateDef 821
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1000
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1010
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1020
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1025
+ParseState
+ParseState
+AddStateDef 1026
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1027
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1028
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1050
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1051
+ParseState
+ParseState
+ParseState
+AddStateDef 1052
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1055
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1056
+ParseState
+ParseState
+ParseState
+AddStateDef 1060
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1061
+ParseState
+ParseState
+ParseState
+AddStateDef 1070
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1071
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1075
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1100
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1110
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1120
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1200
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1210
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 1220
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 3000
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 3050
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+ParseState
+AddStateDef 3051
+ParseState
+ParseState
+AddStateDef -3
+ParseState
+CSffManager::Loading kfm/kfm.sff
+CSffManager::Sff file include 264 images
+CSffManager:: 264 image are decoded
+======================Memory Manager============================
+|Name:               |Allocated bytes                          |
+----------------------------------------------------------------
+|           Main Menu                  |                   0  | 
+|               Stage                  |                   0  | 
+|              Engine                  |                   0  | 
+|            Player 1                  |             1493597  | 
+|            Player 2                  |             1493597  | 
+|            Player 3                  |                   0  | 
+|            Player 4                  |                   0  | 
+================================================================
+CSDLManager:: Cleaning SDL
