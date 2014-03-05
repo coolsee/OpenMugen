@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL", "SDL.vcxproj", "{81CE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDLmain", "SDLmain.vcxproj", "{DA956FD3-E142-46F2-9DD5-C78BEBB56B7A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mugen", "..\..\..\..\code\paintown\src\mugen\mugen\mugen.vcxproj", "{002B2925-7E8E-45E8-91CF-C8A773D7642E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -35,6 +37,12 @@ Global
 		{DA956FD3-E142-46F2-9DD5-C78BEBB56B7A}.Release_NoSTDIO|Win32.Build.0 = Release_NoSTDIO|Win32
 		{DA956FD3-E142-46F2-9DD5-C78BEBB56B7A}.Release|Win32.ActiveCfg = Release|Win32
 		{DA956FD3-E142-46F2-9DD5-C78BEBB56B7A}.Release|Win32.Build.0 = Release|Win32
+		{002B2925-7E8E-45E8-91CF-C8A773D7642E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{002B2925-7E8E-45E8-91CF-C8A773D7642E}.Debug|Win32.Build.0 = Debug|Win32
+		{002B2925-7E8E-45E8-91CF-C8A773D7642E}.Release_NoSTDIO|Win32.ActiveCfg = Release|Win32
+		{002B2925-7E8E-45E8-91CF-C8A773D7642E}.Release_NoSTDIO|Win32.Build.0 = Release|Win32
+		{002B2925-7E8E-45E8-91CF-C8A773D7642E}.Release|Win32.ActiveCfg = Release|Win32
+		{002B2925-7E8E-45E8-91CF-C8A773D7642E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -386,7 +386,7 @@ void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
            if( ( nLastTime >= ( m_pTimer->GetGameTime()- currCommand->nBufferTime )) && ( nLastTime - nTime ) <= currCommand->nCommandTime )
             {
                 m_CurrCommandName = currCommand->strCommand;
-                PrintMessage("%s",m_CurrCommandName);
+                PrintMessage("time:%5d, %s",m_pTimer->GetGameTime(), m_CurrCommandName);
                 break;
             }
         }

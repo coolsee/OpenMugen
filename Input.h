@@ -31,8 +31,7 @@ public:
     CInput();
     ~CInput();
     
-    void ProcessInput(KEYBOARDDATA *lpKeyBoard,SDL_Event event);
-
+    static void ProcessInput(KEYBOARDDATA *lpKeyBoard);
 
 
 };

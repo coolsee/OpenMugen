@@ -17,6 +17,16 @@ typedef unsigned long DWORD;
 
 //#define MAX_PATH 255
 
+enum {
+	MAINMENU=0,
+	STAGE=1,
+	ENGINE=2,
+	P1=3,
+	P2=4,
+	P3=5,
+	P4=6
+};
+
 //Define  Controller buttoms
 enum KEY_NAMES
 {

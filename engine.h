@@ -8,7 +8,7 @@ CMemManager  *m_pMemManager;
 CVideoSystem *m_pVideoSystem;
 CGameTimer   *m_pTimer;
 CVirtualMachine *m_pVMp1;       
-CVirtualMachine *m_pVMp2;       
+CVirtualMachine *m_pVMp2;
 public:
   CEngine();
   ~CEngine();

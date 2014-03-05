@@ -33,7 +33,7 @@ CInput::~CInput()
 
 }
 //Process InputData
-void CInput::ProcessInput(KEYBOARDDATA *lpKeyBoard,SDL_Event event)
+void CInput::ProcessInput(KEYBOARDDATA *lpKeyBoard)
 {
     Uint8 *keystate = SDL_GetKeyState(NULL);
     

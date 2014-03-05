@@ -108,7 +108,7 @@ void CGame::CheckSDL()
  
    if(event.type==SDL_QUIT)
        bGame=false;
-   
+
    if(event.key.keysym.sym==SDLK_ESCAPE)
        bGame=false;
  

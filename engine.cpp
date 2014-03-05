@@ -57,14 +57,15 @@ void CEngine::InitEngine(CMemManager *m,CVideoSystem *v,CGameTimer *t)
     player2.SetGroundValue(220);
     
     //this values also should read out of the stage def
-    
     player1.SetPos(70,220);
     player2.SetPos(240,220);
     
-
-    
     player1.LoadPlayer("");
     player2.LoadPlayer("");
+
+
+	player1.SetKeyBoard(P1);
+	player2.SetKeyBoard(P2);
     
     player2.FaceLeft();
     player1.SetDebug(true);

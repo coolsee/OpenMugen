@@ -1,5 +1,5 @@
 #include "global.h"
-
+#include "Input.h"
 
 
 //is for debug output
@@ -49,6 +49,34 @@ CPlayer::CPlayer()
 CPlayer::~CPlayer()
 {
                    
+}
+
+void CPlayer::SetKeyBoard(int playerid)
+{
+	char Player1_KeyArr[] = "wsadyuchjkopl";
+	char Player2_KeyArr[] = "qqqqqqqqqqqqq";
+	
+	m_keyData=(KEYBOARDDATA*) m_pAlloc->Alloc(sizeof(KEYBOARDDATA));
+	m_keyData->bKeyBoard = true;
+	switch (playerid)
+	{
+	case P1:
+		//Process keyboard input
+		for( int k = 0; k < KEY_COUNT; k++ )
+		{
+			m_keyData->keyInfo[k].sdlKeycode = (Uint16)Player1_KeyArr[k];
+		}
+		break;
+	case P2:
+		//Process keyboard input
+		for( int k = 0; k < KEY_COUNT; k++ )
+		{
+			m_keyData->keyInfo[k].sdlKeycode = (Uint16)Player2_KeyArr[k];
+		}
+		break;
+	default:
+		break;
+	}
 }
 //Set all the pointers to all the managers
 void CPlayer::SetPointers(CVideoSystem *p,CAllocater *a,CGameTimer *t)
@@ -147,6 +175,8 @@ void CPlayer::ExecuteController(PLSTATE* tempState)
 //updates all interlal stuff of the player
 void CPlayer::UpDatePlayer()
 {
+	CInput::ProcessInput(m_keyData);
+	m_CmdManager.Update(m_keyData,bRightFaced);
      HandleFSM();
      HandlePhysic();
      UpDateFacing();

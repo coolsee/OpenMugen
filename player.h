@@ -34,6 +34,8 @@ CGameTimer         *m_pTimer;
 CVirtualMachine    *m_pVMachine;
 CControllerExecuter m_ControllerExec;
 CCmdManager         m_CmdManager;
+// ∂¡»°≈‰÷√£¨”≥…‰∞¥º¸
+KEYBOARDDATA		*m_keyData;
 //Player information
 float              x,y;
 float              xVel,yVel;
@@ -66,6 +68,7 @@ PLAYERCONST         myPlayerConst;
        void UpDatePlayer();
        void DrawPlayer();
 //Set functions
+	   void SetKeyBoard(int playerid);
       void SetVM(CVirtualMachine *p){m_pVMachine=p;}
       void SetPos(s16 xAxis,s16 yAxis){x=xAxis;y=yAxis;}
       void VelSetX(float xvel){xVel=xvel;}
