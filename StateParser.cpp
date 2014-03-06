@@ -2,100 +2,6 @@
 
 
 
-//This are all documented Controllers
-//TODO: find the undocumented controllers
-static char* strControllerTypes[] = {
-  "AfterImage",
-  "AfterImageTime",
-  "AllPalFX",
-  "AngleAdd",
-  "AngleDraw",
-  "AngleMul",
-  "AngleSet",
-  "AppendToClipboard",
-  "AssertSpecial",
-  "AttackDist",
-  "AttackMulSet",
-  "BGPalFX",
-  "BindToParent",
-  "BindToRoot",
-  "BindToTarget",
-  "ChangeAnim",
-  "ChangeAnim2",
-  "ChangeState",
-  "ClearClipboard",
-  "CtrlSet",
-  "DefenceMulSet",
-  "DestroySelf",
-  "DisplayToClipboard",
-  "EnvColor",
-  "EnvShake",
-  "Explod",
-  "ExplodBindTime",
-  "ForceFeedback",
-  "FallEnvShake",
-  "GameMakeAnim",
-  "Gravity",
-  "Helper",
-  "HitAdd",
-  "HitBy",
-  "HitDef",
-  "HitFallDamage",
-  "HitFallSet",
-  "HitFallVel",
-  "HitOverride",
-  "HitVelSet",
-  "LifeAdd",
-  "LifeSet",
-  "MakeDust",
-  "ModifyExplod",
-  "MoveHitReset",
-  "NotHitBy",
-  "Null",
-  "Offset",
-  "PalFX",
-  "ParentVarAdd",
-  "ParentVarSet",
-  "Pause",
-  "PlayerPush",
-  "PlaySnd",
-  "PosAdd",
-  "PosFreeze",
-  "PosSet",
-  "PowerAdd",
-  "PowerSet",
-  "Projectile",
-  "RemoveExplod",
-  "ReversalDef",
-  "ScreenBound",
-  "SelfState",
-  "SprPriority",
-  "StateTypeSet",
-  "SndPan",
-  "StopSnd",
-  "SuperPause",
-  "TargetBind",
-  "TargetDrop",
-  "TargetFacing",
-  "TargetLifeAdd",
-  "TargetPowerAdd",
-  "TargetState",
-  "TargetVelAdd",
-  "TargetVelSet",
-  "Trans",
-  "Turn",
-  "VarAdd",
-  "VarRandom",
-  "VarRangeSet",
-  "VarSet",
-  "VelAdd",
-  "VelMul",
-  "VelSet",
-  "Width",
-  0,
-
-       };
-       
 //All triggers       
 static char * strTriggerType[] = {
   "Abs",
@@ -560,6 +466,7 @@ void CStateParser::PareseState(CTokenizer &tok,CStateManager &StateManager)
 			   throw(CError("expected ="));
            
 		   nController=GetControllerType(tok.GetToken(),tok );
+		   StateManager.AddTypeToState(nController);
         
 		} else if ( tok.CheckToken("triggerall") )
 		{
@@ -608,6 +515,8 @@ void CStateParser::ParseTrigger(CTokenizer &tok,CStateManager &StateManager)
     tok.SetReturnNegativeSeperatelyFromNumber(true);
     EvaluateExpression(tok,StateManager);
     tok.SetReturnNegativeSeperatelyFromNumber(false);
+	// º”»ÎOP_STOP
+	StateManager.AddInstruction(OP_STOP,0,"OP_STOP");
 
 }
 

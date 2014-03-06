@@ -8,7 +8,7 @@ sprpriority = 0
 anim = 0
 
 [State 0, test0]
-type = ChangeAnim
+type = ChangeState
 trigger1 = command = "a"
 value = 10
 

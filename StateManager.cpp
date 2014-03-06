@@ -394,7 +394,7 @@ void CStateManager::CleanUp()
 //Add Instruction to currrent trigger
 void CStateManager::AddInstruction(Uint16 nOpCode,float value,const char *strValue)
 {
-	PrintMessage("AddInstruction = %s %f %s(%i)",strOpCode[nOpCode],value,strValue,nOpCode);
+	PrintMessage("AddInstruction = command:%s value:%f str:%s",strOpCode[nOpCode],value,strValue,nOpCode);
 
 	pInst[nCurrInst].n_OpCode=nOpCode;
 	pInst[nCurrInst].Value=value;

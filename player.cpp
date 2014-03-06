@@ -145,13 +145,13 @@ Handles the FSM of the player
 void CPlayer::HandleFSM()
 {
      //check every state in this statedef
-  /*   for(u16 i=0;i < lpCurrStatedef->nHowManyState; i++)
+     for(u16 i=0;i < lpCurrStatedef->nHowManyState; i++)
      {
         if( CheckState(&lpCurrStatedef->lpState[i]) )
            ExecuteController(&lpCurrStatedef->lpState[i]);
                       
      }
-        */
+      
 }
 /*
 ================================================================================
@@ -161,15 +161,24 @@ Checks all the triggers in the current state
 bool CPlayer::CheckState(PLSTATE* tempState)
 {
      bool bTriggerAll=true;
-     bool bTrigger=true;
+     bool bTrigger=false;
      u8 nTriggerType;
      
- 
+	for (int i=0;i<tempState->nHowManyTriggers;i++)
+	{
+		PLTRIGGER trigger = tempState->triggers[i];
+		bTrigger = m_pVMachine->Execute(trigger.pInts);
+		if (bTrigger)
+		{
+			return true;
+		}
+	}
      return (bTriggerAll && bTrigger) ;
 }
 
 void CPlayer::ExecuteController(PLSTATE* tempState)
 {
+	PrintMessage("exec func no:%d, %s", tempState->nType, strControllerTypes[tempState->nType]);
 }
 
 //updates all interlal stuff of the player

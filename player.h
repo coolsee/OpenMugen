@@ -56,7 +56,6 @@ bool               bRightFaced;
 bool               bDebugInfo;
 bool               bHitDef;
 bool               bAlive;
-char               strCommand[50];
 PLSTATEDEF         *lpCurrStatedef;
 public:
 PLAYERCONST         myPlayerConst;
@@ -83,7 +82,7 @@ PLAYERCONST         myPlayerConst;
       void ChangeState(s32 nSateNumber);
       
 //trigger functions
-      char *GetCommand(){return strCommand;}
+      char *GetCommand(){return (char*)m_CmdManager.GetCurrentCommandName();}
       bool IsPlayerAlive(){return bAlive;}
       s32  GetAnim(){return nAnimNumber;}
       ActionElement *GetCurrAnim(){return m_SffManager.GetCurrAnimation();}
