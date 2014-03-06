@@ -15,6 +15,7 @@ public:
     bool AtEndOfLine();
     bool AtEndOfFile();
         
+	char* GetPartToken();
     const char* GetToken();
     bool        GetToken( char* destString, int maxLength );
     bool        CheckToken( const char* stringToLookFor, bool consumeIfMatch = true );

@@ -11,6 +11,7 @@ CGame mugen;
 #pragma comment(lib, "SDLmain.lib")
 #endif
 
+char globalStr[1024];
 int main(int argc, char **argv)
 {
     try

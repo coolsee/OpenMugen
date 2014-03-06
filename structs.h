@@ -386,6 +386,8 @@ enum PARAMVALUES
 };
 
 const int INSPERTRIGGER = 40;
+const int INSPerConParam = 100;
+const int ConParmPerState = 40;
 const int NUMTRIGGER = 20;
 const int PARAMS = 10;
 const int T_TRIGGERALL = 192;
@@ -406,13 +408,31 @@ struct PLTRIGGER
 
 };
 
+enum ConParmName
+{
+	CPN_value = 0,
+	CPN_emem,
+	CPN_anim,
+	CPN_ctrl,
+	CPN_x,
+	CPN_y,
+};
+
 struct CONTROLLERPARAMS
 {
-    int nParam;
-    INSTRUCTION pInts[INSPERTRIGGER];
+    ConParmName nParam;
+	//TODO:动态生成内存
+    INSTRUCTION pInts[INSPerConParam];
 };
 
 
+struct CHANGESTATE
+{
+	INSTRUCTION *value;
+	INSTRUCTION *ctrl;
+	INSTRUCTION *anim;
+
+};
 
 struct PLSTATE
 {
@@ -420,10 +440,15 @@ struct PLSTATE
 	u16 nType;
 	PLTRIGGER *triggers;
 	u16 nHowManyTriggers;
+
 	bool bPresist;
 	bool bIgnorPause;
 	void *controller;
-
+	// http://elecbyte.com/wiki/index.php/Category:State_Controllers
+	// 里面有说明persistent和ignorehitpause是必须的字段，其他非必须，用map映射存储
+	//TODO: 定义40参数的列表，可以改为动态产生
+	CONTROLLERPARAMS pConParm[ConParmPerState];
+	u16 nParamCount;
 };
 
 //StateTypes
@@ -600,13 +625,6 @@ struct PLAYERCONST
 
 };
 
-struct CHANGESTATE
-{
-  INSTRUCTION *value;
-  INSTRUCTION *ctrl;
-  INSTRUCTION *anim;
-       
-};
 
 
 

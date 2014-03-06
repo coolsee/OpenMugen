@@ -17,10 +17,16 @@ class CStateParser
       int  GetControllerType(const char * strType,CTokenizer &tok);
       int  GetTriggerType(const char * strTrigger,CTokenizer &tok);
       void Error(const char * strErrorMsg,CTokenizer &tok);
+
+	  // action Èç£ºChangeState¡¢ChangeAnim
       int nController;
 //controller parser
       void ParserController(CTokenizer &tok,CStateManager &StateManager,u16 nControllerType);
+	  bool ParseStateBaseParm(CTokenizer &tok,CStateManager &StateManager);
+	  void ParseNormalAction(CTokenizer &tok,CStateManager &StateManager);
+
       void ParseChangeState(CTokenizer &tok,CStateManager &StateManager);
+	  void ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager);
 public:
        CStateParser();
        ~CStateParser();

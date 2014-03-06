@@ -337,6 +337,17 @@ const char* CTokenizer::GetToken()
     return m_Buffer;
 }
 
+char* CTokenizer::GetPartToken()
+{
+	if( !GetToken() )
+		return false;
+	extern char globalStr[];
+	int maxLength = 99;
+	strncpy(globalStr, m_Buffer, maxLength > m_BufferSize ? m_BufferSize : maxLength );
+	globalStr[maxLength]='\0';
+	return globalStr;
+}
+
 bool CTokenizer::GetToken( char* destString, int maxLength )
 {
     if( !GetToken() )

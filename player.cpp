@@ -107,7 +107,7 @@ bool CPlayer::LoadPlayer(const char* strPlayer)
      m_AirManager.ResetManager();
      
      m_CmdManager.LoadCMDFile("kfm/kfm.cmd");
-     StateParser.ParseStateFile("cns.txt",m_StateManager,m_pAlloc);
+     StateParser.ParseStateFile("common1.cns",m_StateManager,m_pAlloc);
      m_AirManager.OpenAir("kfm/kfm.air");
 
 
@@ -119,7 +119,7 @@ bool CPlayer::LoadPlayer(const char* strPlayer)
      m_SffManager.PrepareAnim(0);
      
     
-   //  ChangeState(0);    
+     ChangeState(0);    
      
 	 return true;
 }
@@ -211,7 +211,7 @@ void CPlayer::Debug()
                                                                                          strState[nPhysic]);
      m_pVideoSystem->DrawText(0,30,"x=%3f,y=%3f",x,y-nGround);
      m_pVideoSystem->DrawText(0,40,"HitDef %i | State %i | StateTime %i",bHitDef,
-                                                                         10,
+                                                                         lpCurrStatedef->StateNumber,
                                                                          this->nStateTime);
 
 

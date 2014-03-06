@@ -80,7 +80,10 @@ public:
 	
 	void SetVelSet(float x,float y);
     void NewInst(){nCurrInst=0;}
-	void SetParam(int nParam);
+	// stateÉèÖÃ²ÎÊı
+	void SetParam(ConParmName nParam);
+	void SetPersistent();
+	void SetIgnorehitpause();
 	void SetDefaultStatedef();
 	void Reset();
 	

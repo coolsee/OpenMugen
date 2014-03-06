@@ -1,0 +1,14 @@
+
+;---------------------------------------------------------------------------
+; Stand
+[Statedef 0]
+type = S
+physics = S
+sprpriority = 0
+anim = 0
+
+[State 0, test0]
+type = ChangeAnim
+trigger1 = command = "a"
+value = 10
+

@@ -223,8 +223,9 @@ CStateParser::~CStateParser()
 
 void CStateParser::Error(const char * strErrorMsg,CTokenizer &tok)
 {
-     throw(CError("Parser error:\nin file %s at line %i:\n%s",tok.GetFileName()
+     throw(CError("Parser error:\nin file %s at line %i:\ntoken:%s\nerror:%s",tok.GetFileName()
                                                          ,tok.GetLineNumber()
+														 ,tok.GetPartToken()
                                                          ,strErrorMsg));                  
 }
 
@@ -274,7 +275,14 @@ void CStateParser::ParseStateFile(const char* strFileName,CStateManager &StateMa
                if(!tok.CheckTokenIsNumber())
                      Error("Expected a number in state block",tok);
                  
-                 StateManager.AddState(tok.GetInt(),0);
+			   int stateNum = tok.GetInt();
+			   if(!tok.CheckToken(",", true))
+				   Error("Expected a number in statedef block",tok);
+
+			   char strStateInfo[100];
+			   tok.GetToken(strStateInfo, 99);
+			   // 加入状态
+               StateManager.AddState(stateNum,strStateInfo);
                                   
                 //Skip useless stuff
                  while( !tok.AtEndOfLine() )
@@ -284,7 +292,6 @@ void CStateParser::ParseStateFile(const char* strFileName,CStateManager &StateMa
                    
              }
     
-          
           }
           
           //skip useless stuff
@@ -544,36 +551,53 @@ while( !tok.CheckToken("[",false) && !tok.AtEndOfFile() )
 
 void CStateParser::PareseState(CTokenizer &tok,CStateManager &StateManager)
 {
-         
-while( !tok.CheckToken("[",false) && !tok.AtEndOfFile() )
-{
-    if( tok.CheckToken("type") )
-    {
-       if( !tok.CheckToken("=") )
-           throw(CError("expected ="));
+    // 暂时支持三条tirgger，不支持triggerall 
+	while( !tok.CheckToken("[",false) && !tok.AtEndOfFile() )
+	{
+		if( tok.CheckToken("type") )
+		{
+		   if( !tok.CheckToken("=") )
+			   throw(CError("expected ="));
            
-       nController=GetControllerType(tok.GetToken(),tok );
-      
+		   nController=GetControllerType(tok.GetToken(),tok );
         
-    } else if ( tok.CheckToken("triggerall") )
-    {
-        if( !tok.CheckToken("=") )
-           Error("expected =",tok);
+		} else if ( tok.CheckToken("triggerall") )
+		{
+			//Error("triggerall not support =",tok);
+			if( !tok.CheckToken("=") )
+			   Error("expected =",tok);
            
-        while(!tok.AtEndOfLine() && !tok.AtEndOfFile())
-                tok.GetToken();  
+			while(!tok.AtEndOfLine() && !tok.AtEndOfFile())
+					tok.GetToken();  
 
-    }else  if( tok.CheckToken("trigger1") )        
-    {
-       if( !tok.CheckToken("=") )
-           Error("expected =",tok);
-     
-       ParseTrigger(tok,StateManager);
-    }else break;
-    
+		}else  if( tok.CheckToken("trigger1") )        
+		{
+		   if( !tok.CheckToken("=") )
+			   Error("expected =",tok);
 
+     		PrintMessage("trigger1");
+		   ParseTrigger(tok,StateManager);
+		   // 将stateManager中的pInst移到lpStateDefList->lpState->triggers
+		   StateManager.AddTriggerToState(nController);
+		}else  if( tok.CheckToken("trigger2") )        
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok);
+
+			ParseTrigger(tok,StateManager);
+			// 将stateManager中的pInst移到lpStateDefList->lpState->triggers
+			StateManager.AddTriggerToState(nController);
+		}else  if( tok.CheckToken("trigger3") )        
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok);
+
+			ParseTrigger(tok,StateManager);
+			// 将stateManager中的pInst移到lpStateDefList->lpState->triggers
+			StateManager.AddTriggerToState(nController);
+		}else break;
        
-}
+	}
   //parse the controller
   ParserController(tok,StateManager,nController); 
     
@@ -584,7 +608,7 @@ void CStateParser::ParseTrigger(CTokenizer &tok,CStateManager &StateManager)
     tok.SetReturnNegativeSeperatelyFromNumber(true);
     EvaluateExpression(tok,StateManager);
     tok.SetReturnNegativeSeperatelyFromNumber(false);
-         
+
 }
 
 //Generates the Opcode sequenz for the trigger statement
@@ -630,7 +654,7 @@ void CStateParser::Term(CTokenizer &tok,CStateManager &StateManager)
             tok.CheckToken("||",false)|| tok.CheckToken("^^",false) ||
             tok.CheckToken("&",false) || tok.CheckToken("~",false)  ||
             tok.CheckToken("|",false) || tok.CheckToken("^",false)  || 
-            tok.CheckToken("%",false) && !tok.AtEndOfLine() )  
+            tok.CheckToken("%",false) || tok.CheckToken("(",false) && !tok.AtEndOfLine() )  
      {  
       
             if( tok.CheckToken("*") )
@@ -837,7 +861,19 @@ void CStateParser::Term(CTokenizer &tok,CStateManager &StateManager)
                 Primary(tok,StateManager);
                 StateManager.AddInstruction(OP_MOD,0,"#");
            }
-           
+
+		   //check for intervall operator
+		   if(tok.CheckToken("(", true))
+		   {
+			   //evaluate first expression                   
+			   EvaluateExpression(tok,StateManager);
+				// TODO：处理const(expr)
+			   //intervall op =(,)
+			   if( !tok.CheckToken(")") )
+			   {
+				   Error("Expectetd ) , in intervall operator",tok);
+			   }
+		   }
         
            
       }
@@ -881,9 +917,10 @@ void CStateParser::Primary(CTokenizer &tok,CStateManager &StateManager)
      }
      else //check for a trigger name
      {
-         int i=GetTriggerType(tok.GetToken(),tok);
+		 const char *tokStr = tok.GetToken();
+         int i=GetTriggerType(tokStr,tok);
                  
-         StateManager.AddInstruction(i+OP_Abs,0,"#");
+		 StateManager.AddInstruction(i+OP_Abs,0,tokStr);
       
      }
  
@@ -918,7 +955,8 @@ int CStateParser::GetTriggerType(const char * strTrigger,CTokenizer &tok)
        i++;   
                                 
     }
-    Error(strTrigger,tok);
+	//TODO:找不到的是要被替换的
+    //Error(strTrigger,tok);
        
     return -1;
     
@@ -928,45 +966,193 @@ int CStateParser::GetTriggerType(const char * strTrigger,CTokenizer &tok)
 void CStateParser::ParserController(CTokenizer &tok,CStateManager &StateManager,
                                     u16 nControllerType)
 {
-                                
+	
      switch(nControllerType)
      {
-        //ChangeState       
-        case 17:
+		//ChangeAnim
+	 case 15:
+		 PrintMessage("ParseChangeAnim");
+		  ParseChangeAnim(tok,StateManager);   
+		  break;
+    //ChangeState       
+    case 17:
+		PrintMessage("ParseChangeState");
           ParseChangeState(tok,StateManager);   
         break;
-                            
+	default:
+		PrintMessage("ParseNormalAction");
+		ParseNormalAction(tok, StateManager);
      }
+}
+
+bool CStateParser::ParseStateBaseParm(CTokenizer &tok,CStateManager &StateManager)
+{
+	// 基本的解析persistent" and "ignorehitpause"
+	if( tok.CheckToken("persistent") )
+	{
+		if( !tok.CheckToken("=") )
+			Error("expected =",tok);  
+
+		EvaluateExpression(tok,StateManager);
+		StateManager.SetPersistent();
+		return true;
+		// 设置当前state的参数
+	}else if( tok.CheckToken("ignorehitpause") )
+	{
+		if( !tok.CheckToken("=") )
+			Error("expected =",tok);
+
+		EvaluateExpression(tok,StateManager);  
+		StateManager.SetIgnorehitpause();
+		return true;
+	}else
+	{
+		return false;
+	}     
+}
+
+void CStateParser::ParseNormalAction(CTokenizer &tok,CStateManager &StateManager)
+{
+	//CHANGESTATE *temp=(CHANGESTATE*) m_pAlloc->Alloc(sizeof(CHANGESTATE));
+	//TODO:Check for Required parameters and print error msg
+	// 不能吃掉token，否则下个state就无法匹配，"["会首先被吃掉
+	while( !tok.CheckToken("[", false) && !tok.AtEndOfFile() )
+	{
+		StateManager.NewInst();
+		if (ParseStateBaseParm(tok,StateManager))
+		{
+			// 如果是基本参数就继续；
+			continue;
+		}
+
+		if( tok.CheckToken("value") )
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok);  
+
+			EvaluateExpression(tok,StateManager);
+			// 设置当前state的参数
+			StateManager.SetParam(CPN_value);
+		}else if( tok.CheckToken("ctrl") )
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok);
+
+			EvaluateExpression(tok,StateManager);  
+			StateManager.SetParam(CPN_ctrl);
+		}else if ( tok.CheckToken("anim") )
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok); 
+
+			EvaluateExpression(tok,StateManager); 
+			StateManager.SetParam(CPN_anim);
+		}else if ( tok.CheckToken("x") )
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok); 
+
+			EvaluateExpression(tok,StateManager); 
+			StateManager.SetParam(CPN_x);
+		}else if ( tok.CheckToken("y") )
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok); 
+
+			EvaluateExpression(tok,StateManager); 
+			StateManager.SetParam(CPN_y);
+		}else{
+			Error("control param is not deal! =",tok); 
+		}           
+
+		////Skip useless stuff
+		//while( !tok.AtEndOfLine() ){
+		//	Error("expresstion is not deal! =",tok); 
+		//	tok.GetToken();
+		//}
+			
+
+	}
+	StateManager.NewInst(); 
 }
 
 void CStateParser::ParseChangeState(CTokenizer &tok,CStateManager &StateManager)
 {
-     CHANGESTATE *temp=(CHANGESTATE*) m_pAlloc->Alloc(sizeof(CHANGESTATE));
+     //CHANGESTATE *temp=(CHANGESTATE*) m_pAlloc->Alloc(sizeof(CHANGESTATE));
      //TODO:Check for Required parameters and print error msg
-     while( !tok.CheckToken("[") && !tok.AtEndOfFile() )
+     while( !tok.CheckToken("[", false) && !tok.AtEndOfFile() )
      {
              StateManager.NewInst();
+			 if (ParseStateBaseParm(tok,StateManager))
+			 {
+				 // 如果是基本参数就继续；
+				 continue;
+			 }
+
             if( tok.CheckToken("value") )
             {
                 if( !tok.CheckToken("=") )
                   Error("expected =",tok);  
                           
                 EvaluateExpression(tok,StateManager);
+				// 设置当前state的参数
+				StateManager.SetParam(CPN_value);
             }else if( tok.CheckToken("ctrl") )
             {
                 if( !tok.CheckToken("=") )
                   Error("expected =",tok);
 
                  EvaluateExpression(tok,StateManager);  
-                  
+                 StateManager.SetParam(CPN_ctrl);
             }else if ( tok.CheckToken("anim") )
             {
                  if( !tok.CheckToken("=") )
                   Error("expected =",tok); 
                   
                  EvaluateExpression(tok,StateManager); 
-                  
+                 StateManager.SetParam(CPN_anim);
             }            
      }
       StateManager.NewInst(); 
+}
+
+
+
+void CStateParser::ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager)
+{
+	//TODO:Check for Required parameters and print error msg
+	while( !tok.CheckToken("[", false) && !tok.AtEndOfFile() )
+	{
+		StateManager.NewInst();
+		if (ParseStateBaseParm(tok,StateManager))
+		{
+			// 如果是基本参数就继续；
+			continue;
+		}
+
+		if( tok.CheckToken("value") )
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok);  
+
+			EvaluateExpression(tok,StateManager);
+			// 设置当前state的参数
+			StateManager.SetParam(CPN_value);
+		}else if( tok.CheckToken("ctrl") )
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok);
+
+			EvaluateExpression(tok,StateManager);  
+			StateManager.SetParam(CPN_ctrl);
+		}else if ( tok.CheckToken("anim") )
+		{
+			if( !tok.CheckToken("=") )
+				Error("expected =",tok); 
+
+			EvaluateExpression(tok,StateManager); 
+			StateManager.SetParam(CPN_anim);
+		}            
+	}
+	StateManager.NewInst(); 
 }

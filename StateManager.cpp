@@ -342,17 +342,19 @@ void CStateManager::SetVelSet(float x,float y)
 //Add a State tothe current Statedef
 void CStateManager::AddState(s32 nStateNum,char* strSomeNumber)
 {
-  //  PrintMessage("Add state %i",nStateNum);
+    PrintMessage("Add state %i, %s",nStateNum, strSomeNumber);
+	PLSTATE *curState = NULL;
      if(nTotalState > nTotalStateSize-1)
      {
                     
-          nTotalStateSize+=100;
-          lpStateDefList[nTotalStateDef-1].lpState=(PLSTATE*)m_pAlloc->Realloc(lpStateDefList[nTotalStateDef].lpState,
-                                                                             sizeof(PLSTATE)*nTotalStateSize);
+		nTotalStateSize+=100;
+          
+		lpStateDefList[nTotalStateDef-1].lpState = (PLSTATE*)m_pAlloc->Realloc(lpStateDefList[nTotalStateDef].lpState,
+			sizeof(PLSTATE)*nTotalStateSize);
      }
     
      lpStateDefList[nTotalStateDef-1].lpState[nTotalState].nStateNumber=nStateNum;
-     
+	 lpStateDefList[nTotalStateDef-1].lpState[nTotalState].nParamCount = 0;
      nCurrTrigger=0;
      nTriggerListSize=100;
 
@@ -392,20 +394,20 @@ void CStateManager::CleanUp()
 //Add Instruction to currrent trigger
 void CStateManager::AddInstruction(Uint16 nOpCode,float value,const char *strValue)
 {
-          PrintMessage("AddInstruction = %s %f %s(%i)",strOpCode[nOpCode],value,strValue,nOpCode);
+	PrintMessage("AddInstruction = %s %f %s(%i)",strOpCode[nOpCode],value,strValue,nOpCode);
 
-          pInst[nCurrInst].n_OpCode=nOpCode;
-          pInst[nCurrInst].Value=value;
-          pInst[nCurrInst].strValue=NULL;
+	pInst[nCurrInst].n_OpCode=nOpCode;
+	pInst[nCurrInst].Value=value;
+	pInst[nCurrInst].strValue=NULL;
           
-          //only add a string if we need one
-          if(strValue[0]!='#')
-          {
-                pInst[nCurrInst].strValue=new char[strlen(strValue)+1];   
-                 strcpy(pInst[nCurrInst].strValue,strValue);
-          }
+	//only add a string if we need one
+	if(strValue[0]!='#')
+	{
+		pInst[nCurrInst].strValue=new char[strlen(strValue)+1];   
+			strcpy(pInst[nCurrInst].strValue,strValue);
+	}
              
-         nCurrInst++;
+	nCurrInst++;
     
 
 
@@ -437,11 +439,26 @@ void CStateManager::AddTriggerToState(u8 nType)
 
 
 //set the param value
-void CStateManager::SetParam(int nParam)
+void CStateManager::SetParam(ConParmName nParam)
 {
    // PrintMessage("%i param",nParam);
-
+	PLSTATE *curState = &(lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1]);
+	curState->pConParm[curState->nParamCount].nParam = nParam;
+	// 当前的exprcopy到pararm里面
+	memcpy(curState->pConParm[curState->nParamCount].pInts, pInst,sizeof(INSTRUCTION)*nCurrInst);
 }
+
+void CStateManager::SetPersistent()
+{
+	PLSTATE* curState = &(lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1]);
+	curState->bPresist = 1;
+}
+void CStateManager::SetIgnorehitpause()
+{
+	PLSTATE* curState = &(lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1]);
+	curState->bIgnorPause = 1;
+}
+
 //search for the given state and return it
 PLSTATEDEF* CStateManager::GetStateDef(int nStateNumber)
 {
