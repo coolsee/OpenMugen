@@ -442,10 +442,13 @@ void CStateManager::AddTriggerToState(u8 nType)
 void CStateManager::SetParam(ConParmName nParam)
 {
    // PrintMessage("%i param",nParam);
+	// 添加结束
+	this->AddInstruction(OP_STOP,0,"OP_STOP");
 	PLSTATE *curState = &(lpStateDefList[nTotalStateDef-1].lpState[nTotalState-1]);
 	curState->pConParm[curState->nParamCount].nParam = nParam;
 	// 当前的exprcopy到pararm里面
 	memcpy(curState->pConParm[curState->nParamCount].pInts, pInst,sizeof(INSTRUCTION)*nCurrInst);
+	curState->nParamCount++;
 }
 
 void CStateManager::SetPersistent()

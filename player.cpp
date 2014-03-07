@@ -44,6 +44,8 @@ CPlayer::CPlayer()
  x=y=0;
  xVel=0;
  yVel=0;
+
+InitFunctTable();
 }
 
 CPlayer::~CPlayer()
@@ -107,6 +109,7 @@ bool CPlayer::LoadPlayer(const char* strPlayer)
      m_AirManager.ResetManager();
      
      m_CmdManager.LoadCMDFile("kfm/kfm.cmd");
+	 StateParser.ParseStateFile("kfm/kfm.cmd1",m_StateManager,m_pAlloc);
      StateParser.ParseStateFile("common1.cns",m_StateManager,m_pAlloc);
      m_AirManager.OpenAir("kfm/kfm.air");
 
@@ -144,6 +147,15 @@ Handles the FSM of the player
 */
 void CPlayer::HandleFSM()
 {
+	// Ö´ÐÐ×´Ì¬-1
+	PLSTATEDEF *specialState = this->m_StateManager.GetStateDef(-1);
+	//check every state in this statedef
+	for(u16 i=0;i < specialState->nHowManyState; i++)
+	{
+		if( CheckState(&specialState->lpState[i]) )
+			ExecuteController(&specialState->lpState[i]);
+
+	}
      //check every state in this statedef
      for(u16 i=0;i < lpCurrStatedef->nHowManyState; i++)
      {
@@ -179,6 +191,10 @@ bool CPlayer::CheckState(PLSTATE* tempState)
 void CPlayer::ExecuteController(PLSTATE* tempState)
 {
 	PrintMessage("%s, exec func no:%d, %s",this->GetPlayerName(), tempState->nType, strControllerTypes[tempState->nType]);
+
+	//Execute the function
+	(this->*pFuncTable[tempState->nType])(tempState);
+
 }
 
 //updates all interlal stuff of the player
@@ -297,3 +313,61 @@ bool CPlayer::IsAnimAviable(s32 nAnim)
      return true;
 }
 
+
+/*
+================================================================================
+control function
+================================================================================
+*/
+void CPlayer::InitFunctTable()
+{
+	/*pFuncTable[Control_AfterImage]=&CPlayer::ControlType_AfterImage;
+	pFuncTable[Control_AfterImageTime]=&CPlayer::ControlType_AfterImageTime;
+	pFuncTable[Control_AllPalFX]=&CPlayer::ControlType_AllPalFX;
+	pFuncTable[Control_AngleAdd]=&CPlayer::ControlType_AngleAdd;
+	pFuncTable[Control_AngleDraw]=&CPlayer::ControlType_AngleDraw;
+	pFuncTable[Control_AngleMul]=&CPlayer::ControlType_AngleMul;
+	pFuncTable[Control_AngleSet]=&CPlayer::ControlType_AngleSet;
+	pFuncTable[Control_AppendToClipboard]=&CPlayer::ControlType_AppendToClipboard;
+	pFuncTable[Control_AssertSpecial]=&CPlayer::ControlType_AssertSpecial;
+	pFuncTable[Control_AttackDist]=&CPlayer::ControlType_AttackDist;
+	pFuncTable[Control_AttackMulSet]=&CPlayer::ControlType_AttackMulSet;
+	pFuncTable[Control_BGPalFX]=&CPlayer::ControlType_BGPalFX;
+	pFuncTable[Control_BindToParent]=&CPlayer::ControlType_BindToParent;
+	pFuncTable[Control_BindToRoot]=&CPlayer::ControlType_BindToRoot;
+	pFuncTable[Control_BindToTarget]=&CPlayer::ControlType_BindToTarget;*/
+	pFuncTable[Control_ChangeAnim]=&CPlayer::ControlType_ChangeAnim;
+	//pFuncTable[Control_ChangeAnim2]=&CPlayer::ControlType_ChangeAnim2;
+	pFuncTable[Control_ChangeState]=&CPlayer::ControlType_ChangeState;
+}
+
+void CPlayer::ControlType_ChangeAnim(PLSTATE* state)
+{
+	float value =0;
+	for (int i =0;i<=state->nParamCount;i++)
+	{
+		CONTROLLERPARAMS param = state->pConParm[i];
+		if (param.nParam == CPN_value)
+		{
+			value = this->m_pVMachine->Execute(param.pInts);
+			PrintMessage("ControlType_ChangeAnim %f", value);
+			break;
+		}
+	}
+	this->m_SffManager.PrepareAnim((int)value);
+}
+void CPlayer::ControlType_ChangeState(PLSTATE* state)
+{
+	float value =0;
+	for (int i =0;i<=state->nParamCount;i++)
+	{
+		CONTROLLERPARAMS param = state->pConParm[i];
+		if (param.nParam == CPN_value)
+		{
+			value = this->m_pVMachine->Execute(param.pInts);
+			PrintMessage("ControlType_ChangeState %f", value);
+			break;
+		}
+	}
+	this->ChangeState((int)(value));
+}

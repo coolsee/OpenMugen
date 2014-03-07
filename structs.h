@@ -233,6 +233,7 @@ struct CONTROLLERPARAMS
 
 struct PLSTATE
 {
+	// control所属的state num
 	s32 nStateNumber;
 	u16 nType;
 	PLTRIGGER *triggers;
@@ -240,7 +241,9 @@ struct PLSTATE
 
 	bool bPresist;
 	bool bIgnorPause;
-	void *controller;
+	// 暂时无用，存储的control都直接由nType，映射成函数了
+	//void *controller;
+
 	// http://elecbyte.com/wiki/index.php/Category:State_Controllers
 	// 里面有说明persistent和ignorehitpause是必须的字段，其他非必须，用map映射存储
 	//TODO: 定义40参数的列表，可以改为动态产生

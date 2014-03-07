@@ -23,6 +23,8 @@
 #define __PLAYER__H
 
 
+#define NUMFUNCT_CONTROL 140
+
 class CPlayer
 {
 CAllocater         *m_pAlloc;
@@ -99,6 +101,16 @@ private:
       void UpDateFacing();
       void Debug();
 
+
+
+public:// controlº¯Êý
+	void InitFunctTable();
+
+	typedef void (CPlayer::*ptControl)(PLSTATE*);
+	ptControl pFuncTable[NUMFUNCT_CONTROL];
+
+	void ControlType_ChangeAnim(PLSTATE* );
+	void ControlType_ChangeState(PLSTATE* );
 };
 
 #endif

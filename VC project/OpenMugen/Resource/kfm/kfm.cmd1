@@ -1,0 +1,35 @@
+
+; Stand
+[Statedef -1]
+;===========================================================================
+;---------------------------------------------------------------------------
+;Stand Light Punch
+[State -1, Stand Light Punch]
+trigger1 = command = "a" 
+type = ChangeState
+value = 200 ;3050
+
+
+;---------------------------------------------------------------------------
+;Stand Strong Punch
+[State -1, Stand Strong Punch]
+trigger1 = command = "b" 
+type = ChangeState
+value = 210
+
+;===========================================================================
+;---------------------------------------------------------------------------
+;Stand Light Punch
+[State -1, Stand Light Punch]
+trigger1 = command = "x" 
+type = ChangeState
+value = 230 ;3050
+
+
+;---------------------------------------------------------------------------
+;Stand Strong Punch
+[State -1, Stand Strong Punch]
+trigger1 = command = "y" 
+type = ChangeState
+value = 240
+

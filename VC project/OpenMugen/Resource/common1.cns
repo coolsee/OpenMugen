@@ -1,23 +1,139 @@
-
 ;---------------------------------------------------------------------------
 ; Stand
 [Statedef 0]
 type = S
 physics = S
+sprpriority = 0
 anim = 0
 
-[State 0, test0]
-type = ChangeState
-trigger1 = command = "a"
-value = 10
 
+
+
+;---------------------------------------------------------------------------
+; Stand to Crouch
 [Statedef 10]
-type = S
-physics = S
+type    = C
+physics = C
 anim = 10
 
-[State 10, test0]
+[State 10, 1]
+type = VelMul
+trigger1 = Time = 0
+x = .75
+
+
+[State 10, 3]
 type = ChangeState
-trigger1 = command = "b"
+trigger1 = AnimTime = 0
+value = 11
+
+;---------------------------------------------------------------------------
+; Crouching
+[Statedef 11]
+type    = C
+physics = C
+anim = 11
+sprpriority = 0
+
+[State 11, 1] ;Change from turning animation
+type = ChangeAnim
+trigger1 = Anim = 6 && AnimTime = 0
+value = 11
+
+
+;---------------------------------------------------------------------------
+; Crouch to Stand
+[Statedef 12]
+type    = S
+physics = S
+anim = 12
+
+[State 12, 1]
+type = ChangeState
+trigger1 = AnimTime = 0
 value = 0
 
+;---------------------------------------------------------------------------
+; Walk
+[Statedef 20]
+type    = S
+physics = S
+sprpriority = 0
+
+[State 20, 1]
+type = VelSet
+trigger1 = command = "holdfwd"
+x = 1
+
+[State 20, 2]
+type = VelSet
+trigger1 = command = "holdback"
+x = 1
+
+[State 20, 3]
+type = ChangeAnim
+trigger1 = Anim != 20 && Anim != 5
+trigger2 = Anim = 5 && AnimTime = 0
+value = 20
+
+[State 20, 4]
+type = ChangeAnim
+trigger1 = Anim != 21 && Anim != 5
+trigger2 = Anim = 5 && AnimTime = 0
+value = 21
+
+;---------------------------------------------------------------------------
+; Walk
+[Statedef 200]
+type    = S
+physics = S
+sprpriority = 0
+anim = 200
+
+[State 200, 4]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+
+
+
+;---------------------------------------------------------------------------
+; Walk
+[Statedef 210]
+type    = S
+physics = S
+sprpriority = 0
+anim = 210
+
+[State 210, 4]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+
+;---------------------------------------------------------------------------
+; Walk
+[Statedef 230]
+type    = S
+physics = S
+sprpriority = 0
+anim = 230
+
+[State 230, 4]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+
+
+
+;---------------------------------------------------------------------------
+; Walk
+[Statedef 240]
+type    = S
+physics = S
+sprpriority = 0
+anim = 240
+
+[State 240, 4]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
