@@ -115,6 +115,7 @@
     <ClInclude Include="..\..\AirManager.h" />
     <ClInclude Include="..\..\CmdManager.h" />
     <ClInclude Include="..\..\ControllerExecuter.h" />
+    <ClInclude Include="..\..\define.h" />
     <ClInclude Include="..\..\engine.h" />
     <ClInclude Include="..\..\game.h" />
     <ClInclude Include="..\..\global.h" />

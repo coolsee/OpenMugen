@@ -137,5 +137,8 @@
     <ClInclude Include="..\..\VM.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\define.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

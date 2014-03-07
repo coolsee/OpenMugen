@@ -89,6 +89,8 @@ PLAYERCONST         myPlayerConst;
       bool IsAnimAviable(s32 nAnim);
       bool IsCtrl(){return bCtrl;}
 
+	  const char* GetPlayerName(){return this->myPlayerConst.PlayerData.szPlayerName;}
+
 private:
       bool CheckState(PLSTATE* tempState);
       void ExecuteController(PLSTATE* tempState);

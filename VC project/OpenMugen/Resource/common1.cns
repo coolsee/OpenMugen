@@ -4,11 +4,20 @@
 [Statedef 0]
 type = S
 physics = S
-sprpriority = 0
 anim = 0
 
 [State 0, test0]
 type = ChangeState
 trigger1 = command = "a"
 value = 10
+
+[Statedef 10]
+type = S
+physics = S
+anim = 10
+
+[State 10, test0]
+type = ChangeState
+trigger1 = command = "b"
+value = 0
 

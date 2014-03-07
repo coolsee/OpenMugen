@@ -178,7 +178,7 @@ bool CPlayer::CheckState(PLSTATE* tempState)
 
 void CPlayer::ExecuteController(PLSTATE* tempState)
 {
-	PrintMessage("exec func no:%d, %s", tempState->nType, strControllerTypes[tempState->nType]);
+	PrintMessage("%s, exec func no:%d, %s",this->GetPlayerName(), tempState->nType, strControllerTypes[tempState->nType]);
 }
 
 //updates all interlal stuff of the player

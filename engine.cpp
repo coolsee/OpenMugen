@@ -34,10 +34,14 @@ void CEngine::InitEngine(CMemManager *m,CVideoSystem *v,CGameTimer *t)
      
     //Set all needed pointer to need class by class player
     player1.SetPointers(v,m->GetAllocater(P1),t);
+	strcpy(player1.myPlayerConst.PlayerData.szPlayerName, "player1");
     player2.SetPointers(v,m->GetAllocater(P2),t);
+	strcpy(player2.myPlayerConst.PlayerData.szPlayerName, "player2");
     player3.SetPointers(v,m->GetAllocater(P3),t);
+	strcpy(player3.myPlayerConst.PlayerData.szPlayerName, "player3");
     player4.SetPointers(v,m->GetAllocater(P4),t);
-    
+    strcpy(player4.myPlayerConst.PlayerData.szPlayerName, "player4");
+
     //get the virtual machines
     m_pVMp1 = new CVirtualMachine;
     m_pVMp2 = new CVirtualMachine;
@@ -48,7 +52,7 @@ void CEngine::InitEngine(CMemManager *m,CVideoSystem *v,CGameTimer *t)
     
     //now set the VM to the player
     player1.SetVM(m_pVMp1);
-    player2.SetVM(m_pVMp1);
+    player2.SetVM(m_pVMp2);
     
     
     /*Set the gournd limit of the player 

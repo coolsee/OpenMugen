@@ -44,11 +44,11 @@ void CVirtualMachine::SetPlayers(CPlayer *p1,CPlayer *p2)
 //Sets the pointer to the Functions int this class
 void CVirtualMachine::InitFunctTable()
 {
-   pFuncTable[0]=&CVirtualMachine::PushValue;
-   pFuncTable[1]=&CVirtualMachine::PopValue;
-   pFuncTable[2]=&CVirtualMachine::AddOP;
-   pFuncTable[3]=&CVirtualMachine::SubOP;
-   pFuncTable[4]=&CVirtualMachine::MulOP;
+   pFuncTable[OP_PUSH]=&CVirtualMachine::PushValue;
+   pFuncTable[OP_POP]=&CVirtualMachine::PopValue;
+   pFuncTable[OP_ADD]=&CVirtualMachine::AddOP;
+   pFuncTable[OP_SUB]=&CVirtualMachine::SubOP;
+   pFuncTable[OP_MUL]=&CVirtualMachine::MulOP;
    pFuncTable[5]=&CVirtualMachine::DivOP;
    pFuncTable[6]=&CVirtualMachine::EqualOP;
    pFuncTable[7]=&CVirtualMachine::NotEqual;
@@ -902,7 +902,7 @@ void CVirtualMachine::Const()
    switch((int)temp1)
    {
       //data.life
-      case 0:
+      case Const_Data_Life:
         m_Stack.Push((float)((CPlayer*)m_p1)->myPlayerConst.PlayerData.nLife,"#");
       break;
       

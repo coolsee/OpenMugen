@@ -258,7 +258,7 @@ bool CCmdManager::LoadCMDFile( const char* file )
 void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
 {
     m_CurrCommandName = NULL;
-    m_KeyBuffer[ m_KeyIndex ].keyBitfield = 0;
+    m_KeyBuffer[ m_KeyIndex ].keyBitfield = 0; // buffer是用来存储上次的键值
   
     m_KeyBuffer[ m_KeyIndex ].gameTicks = m_pTimer->GetGameTime();
 
@@ -284,43 +284,46 @@ void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
 
     PLCOMMAND* currCommand = m_Commands;
     
-    for( int a = 0; a < m_CommandCount; a++ )
+    for( int a = 0; a < m_CommandCount; a++ )// 遍历所有命令
     {           
         int nTime = -1, nLastTime = -1;
         int currKeyIndex = 0;
 
-        for( int b = currCommand->nHowManyCommand - 1; b >= 0; b-- )
+		// 使用例子command = ~D, DF, F, x讲解
+		// 最初从x判定，按下，且与要求一致，将记录最后的时间，然后currKeyIndex++，将buffer判定向前推进
+		// F，DF，一致的时候向前走，直到~D一致，记录第一时间，判定是否超出。
+        for( int b = currCommand->nHowManyCommand - 1; b >= 0; b-- )// 一个命令，判断是否匹配所有按键
         {
             bool bCommand = false;
-            bool onRelease = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_ON_RELEASE ) != 0 );
-            bool onHold = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_MUST_BE_HELD ) != 0 );
-            bool use4Way = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_DETECT_AS_4WAY ) != 0 );
-            bool banOtherInput = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_BAN_OTHER_INPUT ) != 0 );
-            int gameTicksToHold = currCommand->nCommand[ b ].gameTicksForHold;
-            int keyCode = currCommand->nCommand[ b ].keyCode;
+            bool onRelease = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_ON_RELEASE ) != 0 );// 按键是否需要放开
+            bool onHold = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_MUST_BE_HELD ) != 0 );// 是否要求按住
+            bool use4Way = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_DETECT_AS_4WAY ) != 0 );// 是否是四个方向
+            bool banOtherInput = (( currCommand->nCommand[ b ].keyModifier & PLC_KEYMOD_BAN_OTHER_INPUT ) != 0 );// 是否禁止有其他按键按下
+            int gameTicksToHold = currCommand->nCommand[ b ].gameTicksForHold; // 按键按下的时间
+            int keyCode = currCommand->nCommand[ b ].keyCode;// 按键转码
             
-            for( ; currKeyIndex < m_KeyBufferSize; currKeyIndex++ )
+            for( ; currKeyIndex < m_KeyBufferSize; currKeyIndex++ )// 每个键对所有buff处理！！！！
             {
-                PLCOMMANDFRAMEINPUT* frameInput = &m_KeyBuffer[ AdjustKeyIndex( m_KeyIndex, -currKeyIndex ) ];
+                PLCOMMANDFRAMEINPUT* frameInput = &m_KeyBuffer[ AdjustKeyIndex( m_KeyIndex, -currKeyIndex ) ];// 从当前的输入键值，向前遍历
                 bool keyDown = (( frameInput->keyBitfield & keyCode ) == keyCode );
-                if( keyDown && !use4Way )
+                if( keyDown && !use4Way )// 需要按键按下，不是四个方向
                 {
                     int keyCodeDirs = ( keyCode & PLC_ALL_DIRECTIONS_BITFIELD );
                     int frameInputDirs = ( frameInput->keyBitfield & PLC_ALL_DIRECTIONS_BITFIELD );
-                    keyDown = !keyCodeDirs || ( keyCodeDirs == frameInputDirs );
+                    keyDown = !keyCodeDirs || ( keyCodeDirs == frameInputDirs );//按下的按钮是否是方向键，是则要与需求一致，不是，则正确，继续判定
                 }
                 
                 bool buttonConditionsMet = false;
                 
                 // see how long it's been held                
-                if( onRelease != keyDown )
+                if( onRelease != keyDown )// 按键松开，并保持一定时间时间(keyDown&&!onRelease）
                 {
                     int gameTicksHeld = 0;
                     for( int k = currKeyIndex + 1; k < m_KeyBufferSize; k++ )
                     {
-                        PLCOMMANDFRAMEINPUT* frameInput2 = &m_KeyBuffer[ AdjustKeyIndex( m_KeyIndex, -k ) ];
+                        PLCOMMANDFRAMEINPUT* frameInput2 = &m_KeyBuffer[ AdjustKeyIndex( m_KeyIndex, -k ) ];// 从当前的输入键值，向前遍历
                         bool keyDown2 = (( frameInput2->keyBitfield & keyCode ) == keyCode );
-                        if( keyDown2 && !use4Way )
+                        if( keyDown2 && !use4Way )// 按键按下，不是四个方向
                         {
                             int keyCodeDirs = ( keyCode & PLC_ALL_DIRECTIONS_BITFIELD );
                             int frameInputDirs = ( frameInput2->keyBitfield & PLC_ALL_DIRECTIONS_BITFIELD );
@@ -355,24 +358,24 @@ void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
                         }                        
                     }
                 }
-                
-                if( buttonConditionsMet )
-                {
-                    //if its the first element store the time of it
-                    if( b == 0 )
-                    {
-                        nTime = frameInput->gameTicks;
-                    }
-                    
-                    if( b == ( currCommand->nHowManyCommand - 1 ))
-                    {
-                        nLastTime = frameInput->gameTicks;   
-                    }
-                    
-                    bCommand = true;
-                    currKeyIndex++;
-                    break;                    
-                }
+                // 如果单键过关了，就记录开始结束时间，继续下一个按键，
+				if( buttonConditionsMet )
+				{
+					//if its the first element store the time of it
+					if( b == 0 )
+					{
+						nTime = frameInput->gameTicks;
+					}
+
+					if( b == ( currCommand->nHowManyCommand - 1 ))
+					{
+						nLastTime = frameInput->gameTicks;   
+					}
+
+					bCommand = true;
+					currKeyIndex++;
+					break;                    
+				}
            }
             if( !bCommand )
                 break;            
@@ -383,7 +386,8 @@ void CCmdManager::Update( KEYBOARDDATA* keys, bool facingRight )
             // the last button of the sequenz must be pressed int the Current game tick to
             // be valid and then it must be check for how long it has taken to do the input
            // int gameTicks = GetGameTicks();
-           if( ( nLastTime >= ( m_pTimer->GetGameTime()- currCommand->nBufferTime )) && ( nLastTime - nTime ) <= currCommand->nCommandTime )
+			// bufer时间，即时命令有效的tick时间
+           if( ( nLastTime > ( m_pTimer->GetGameTime()- currCommand->nBufferTime )) && ( nLastTime - nTime ) <= currCommand->nCommandTime )
             {
                 m_CurrCommandName = currCommand->strCommand;
                 PrintMessage("time:%5d, %s",m_pTimer->GetGameTime(), m_CurrCommandName);

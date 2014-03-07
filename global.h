@@ -26,7 +26,7 @@
 class CPlayer;
 class CVirtualMachine;
 class CGameTimer;
-
+#include "define.h"
 #include "structs.h"
 #include "MemManager.h"
 
