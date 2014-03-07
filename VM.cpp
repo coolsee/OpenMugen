@@ -890,6 +890,11 @@ void CVirtualMachine::Ceil()
 //Command
 void CVirtualMachine::Command()
 {
+	if (!m_pPlayer1->IsCtrl())
+	{
+		m_Stack.Push(0,NULL);
+		return;
+	}
     m_Stack.Push(0,m_pPlayer1->GetCommand());
 }
 

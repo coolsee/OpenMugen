@@ -1,6 +1,7 @@
 ;---------------------------------------------------------------------------
 ; Stand
 [Statedef 0]
+ctrl = 1
 type = S
 physics = S
 sprpriority = 0
@@ -134,6 +135,23 @@ sprpriority = 0
 anim = 240
 
 [State 240, 4]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+
+
+
+;---------------------------------------------------------------------------
+; Walk
+[Statedef 100]
+ctrl = 0
+type    = S
+physics = S
+sprpriority = 0
+anim = 100
+
+
+[State 100, 4]
 type = ChangeState
 trigger1 = AnimTime = 0
 value = 0

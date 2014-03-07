@@ -33,3 +33,19 @@ trigger1 = command = "y"
 type = ChangeState
 value = 240
 
+;===========================================================================
+;---------------------------------------------------------------------------
+;Stand Light Punch
+[State -1, Stand Light Punch]
+trigger1 = command = "holdfwd" 
+type = ChangeState
+value = 100
+
+
+;---------------------------------------------------------------------------
+;Stand Strong Punch
+[State -1, Stand Strong Punch]
+trigger1 = command = "holdback" 
+type = ChangeState
+value = 100
+
