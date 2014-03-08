@@ -17,4 +17,6 @@ Debug
 *.opensdf
 *.sdf
 *.suo
+BIN
+OBJ
 log.txt

@@ -30,7 +30,7 @@ class CInput
 public:
     CInput();
     ~CInput();
-    
+
     static void ProcessInput(KEYBOARDDATA *lpKeyBoard);
 
 

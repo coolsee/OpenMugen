@@ -5,7 +5,7 @@
 #define VER     "Alpha 2"
 #define OMTITLE "OpenMugen"
 
-#include "SDL.h"
+#include <SDL.h>
 
 //SDL_GFX libery
 
@@ -20,6 +20,9 @@
 #include <malloc.h>
 #include <math.h>
 
+#ifdef __linux__
+#define strcmpi strcasecmp
+#endif
 //using namespace std;
 
 //used class
@@ -32,7 +35,7 @@ class CGameTimer;
 
 //Nate Pendeltons Tokenizer
 #include "tokenizer.h"
-#include "cmdManager.h"
+#include "CmdManager.h"
 
 #include "scale2x.h"
 #include "Timer.h"

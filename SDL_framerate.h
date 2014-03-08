@@ -11,7 +11,7 @@
 #define _SDL_framerate_h
 
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 /* --------- Definitions */
 

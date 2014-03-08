@@ -147,7 +147,7 @@ Handles the FSM of the player
 */
 void CPlayer::HandleFSM()
 {
-	// ִ��״̬-1
+	// ִ��״̬-1
 	PLSTATEDEF *specialState = this->m_StateManager.GetStateDef(-1);
 	//check every state in this statedef
 	for(u16 i=0;i < specialState->nHowManyState; i++)
@@ -200,7 +200,19 @@ void CPlayer::ExecuteController(PLSTATE* tempState)
 //updates all interlal stuff of the player
 void CPlayer::UpDatePlayer()
 {
-	CInput::ProcessInput(m_keyData);
+//	CInput::ProcessInput(m_keyData);
+
+	Uint8 *keystate = SDL_GetKeyState(NULL);
+
+	//Process keyboard input
+	if( m_keyData->bKeyBoard )
+	{
+	for( int k = 0; k < KEY_COUNT; k++ )
+	{
+		m_keyData->keyInfo[ k ].isPressed = keystate[ m_keyData->keyInfo[ k ].sdlKeycode ];
+	}
+	}
+
 	m_CmdManager.Update(m_keyData,bRightFaced);
      HandleFSM();
      HandlePhysic();
