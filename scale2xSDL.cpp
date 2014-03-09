@@ -10,7 +10,6 @@
 
 
 
-#include <SDL/SDL.h>
 #include "global.h"
 
 #ifndef MAX
