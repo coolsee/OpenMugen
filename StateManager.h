@@ -82,6 +82,7 @@ public:
     void NewInst(){nCurrInst=0;}
 	// state…Ë÷√≤Œ ˝
 	void SetParam(ConParmName nParam);
+	void SetHDParam(CONTROLHITDEFParmName nParam);
 	void SetPersistent();
 	void SetIgnorehitpause();
 	void SetDefaultStatedef();

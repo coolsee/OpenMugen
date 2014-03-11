@@ -18,8 +18,8 @@ typedef unsigned long DWORD;
 
 struct KEYELEMENT
 {
-    KEYELEMENT()  { isPressed = false; sdlKeycode = 0; }
-    Uint16 isPressed, sdlKeycode;
+	KEYELEMENT()  { isPressed = false; sdlKeycode = 0; }
+	Uint16 isPressed, sdlKeycode;
 };
 
 
@@ -36,25 +36,25 @@ struct KEYELEMENT
 
 struct PLCOMMANDELEMENT
 {
-    PLCOMMANDELEMENT() { keyCode = 0; keyModifier = 0; gameTicksForHold = 0; }
-    int keyCode;
-    Uint16 keyModifier;
-    Uint16 gameTicksForHold;
+	PLCOMMANDELEMENT() { keyCode = 0; keyModifier = 0; gameTicksForHold = 0; }
+	int keyCode;
+	Uint16 keyModifier;
+	Uint16 gameTicksForHold;
 };
 
 struct PLCOMMANDFRAMEINPUT
 {
-    PLCOMMANDFRAMEINPUT()  { keyBitfield = gameTicks = 0; }
-    Uint16 keyBitfield;
-    Uint32 gameTicks;
+	PLCOMMANDFRAMEINPUT()  { keyBitfield = gameTicks = 0; }
+	Uint16 keyBitfield;
+	Uint32 gameTicks;
 };
 
 struct PLCOMMAND
 {
-    PLCOMMANDELEMENT nCommand[MAXCOMMAND];
-    Uint8 nHowManyCommand;
-    Uint8 nCommandTime, nBufferTime;
-    char strCommand[255];
+	PLCOMMANDELEMENT nCommand[MAXCOMMAND];
+	Uint8 nHowManyCommand;
+	Uint8 nCommandTime, nBufferTime;
+	char strCommand[255];
 
 };
 
@@ -62,26 +62,26 @@ struct PLCOMMAND
 //Movedata Struct for Saving the current Button States
 struct KEYBOARDDATA
 {
-    KEYELEMENT keyInfo[ KEY_COUNT ];
-    bool bKeyBoard;
+	KEYELEMENT keyInfo[ KEY_COUNT ];
+	bool bKeyBoard;
 };
 
 
 //memlist for Allocater class
 struct MEMLIST
 {
-   u8    nType;
-   size_t   nSize;
-   void *adrress;    
-       
+	u8    nType;
+	size_t   nSize;
+	void *adrress;    
+
 };
 
 //font struct
 struct MUGENFONT
 {
-    u8 c;
-    s16 x;
-    u8 nWidth;
+	u8 c;
+	s16 x;
+	u8 nWidth;
 
 };
 
@@ -157,16 +157,16 @@ struct SNDSUBHEADER
 
 struct RGBColor
 {
-   u8 R;
-   u8 G;
-   u8 B;
-       
+	u8 R;
+	u8 G;
+	u8 B;
+
 };
 
 struct PalFX
 {
-  u8 dummy;
-       
+	u8 dummy;
+
 };
 
 struct SFFSPRITE
@@ -177,15 +177,15 @@ struct SFFSPRITE
 	s16 GroupNumber;
 	s16 ImageNumber;
 	u16 ColorPallet[256];
-	      
+
 	u8 *byPcxFile;
 
 };
 
 struct Stacktype
 {
-    float Value;
-    char string[50]; 
+	float Value;
+	char string[50]; 
 	// 扩展字段，用于方向键是否按下，尚待支持
 	//char stringEx[50];
 
@@ -194,32 +194,40 @@ struct Stacktype
 
 struct XYVALUE
 {
-   float x;
-   float y;          
+	float x;
+	float y;          
 };
 
 // 操作堆栈的元素
 struct INSTRUCTION
 {   
-    Uint16 n_OpCode;
-    float Value;
-    char *strValue;
+	Uint16 n_OpCode;
+	float Value;
+	char *strValue;
 
 };
 // 触发器，一个触发器就是一个表达式
 struct PLTRIGGER
 {
-    u8 nTriggerType;
-    INSTRUCTION* pInts;
+	u8 nTriggerType;
+	INSTRUCTION* pInts;
 
 };
 
 // 触发器执行需要的值，用表达式保存，
 struct CONTROLLERPARAMS
 {
-    ConParmName nParam;
+	ConParmName nParam;
 	//TODO:动态生成内存
-    INSTRUCTION pInts[INSPerConParam];
+	INSTRUCTION pInts[INSPerConParam];
+};
+
+// HitDef 保存的值
+struct CONTROLHITDEF
+{
+	CONTROLHITDEFParmName nParam;
+	//TODO:动态生成内存
+	INSTRUCTION pInts[INSPerConParam];
 };
 
 // TODO control中的执行语句只有这三个是表达式，其他的都是数值，为保险还是用CONTROLLERPARAMS统一保存
@@ -249,6 +257,10 @@ struct PLSTATE
 	//TODO: 定义40参数的列表，可以改为动态产生
 	CONTROLLERPARAMS pConParm[ConParmPerState];
 	u16 nParamCount;
+
+	// HitDef参数比较多，单独解析
+	CONTROLHITDEF pConHDParm[ConHDParmPerState];
+	u16 nParamHDCount;
 };
 
 
@@ -268,24 +280,21 @@ struct PLSTATEDEF
 	s16 nJuggle;
 	bool bFacep2;
 	///Some  flags
-    bool bHitdefpersist;
+	bool bHitdefpersist;
 	bool bMovehitpersist;
 	bool bHitcountpersist;
 	//////////////////////
 	u8 nSprpriority;
 	u16 nHowManyState;
-	
 	PLSTATE* lpState;
-	
-	
 
 };
 
 
 struct ClsnRECT
 {
-    s16 x,y;
-    s16 h,w;
+	s16 x,y;
+	s16 h,w;
 
 };
 //Clsn Struct to hold one Clns Rectangle with type
@@ -317,8 +326,8 @@ struct ActionElement
 	s16 loopStart;
 	u16 nNumberOfElements;
 	u16 nCurrentImage;
-	
-    u32 nDuringTime;
+
+	u32 nDuringTime;
 	s16 nCompletAnimTime;
 	u32 nCurrTime;
 	u16 nCurrentImageTime;
@@ -408,22 +417,22 @@ struct PLAYERCONST
 
 class CError
 {
-char strMessage[100];      
+	char strMessage[100];      
 public:
-  CError(const char* strError,...)
-  {
+	CError(const char* strError,...)
+	{
 
-  char string[100];                  // Temporary string
+		char string[100];                  // Temporary string
 
-  va_list ap;                // Pointer To List Of Arguments
-  va_start(ap, strError);         // Parses The String For Variables
-  vsprintf(string, strError, ap); // Converts Symbols To Actual Numbers
-  va_end(ap);      
+		va_list ap;                // Pointer To List Of Arguments
+		va_start(ap, strError);         // Parses The String For Variables
+		vsprintf(string, strError, ap); // Converts Symbols To Actual Numbers
+		va_end(ap);      
 
-  strcpy(strMessage,string);
+		strcpy(strMessage,string);
 
-              }
-  const char *GetError(){return strMessage;}     
+	}
+	const char *GetError(){return strMessage;}     
 };
 
 

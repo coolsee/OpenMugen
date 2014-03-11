@@ -27,6 +27,7 @@ class CStateParser
 
       void ParseChangeState(CTokenizer &tok,CStateManager &StateManager);
 	  void ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager);
+	  void ParseHitDef(CTokenizer &tok,CStateManager &StateManager);
 public:
        CStateParser();
        ~CStateParser();
